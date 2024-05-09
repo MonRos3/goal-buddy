@@ -2,7 +2,8 @@
 
 # Overview
 
-This flask-based web app is designed to help you achieve your goals.
+This flask-based web app is designed to help you reach your goals. Enter your goal, the estimated time to complete it, break the big goal into smaller milestones, and let goal buddy help keep you on-track to reach each milestone until the goal is accomplished. 
+
 
 Use this section to outline the vision for the product to be developed, including a use case diagram that shows the main user interactions with the product, in order to provide readers with an overview of the project.
 
@@ -11,6 +12,18 @@ Use this section to outline the vision for the product to be developed, includin
 ## User Stories
 
 Describe the user stories designed for the project, including clear acceptance criteria and point estimate for each of them. User stories must be consistent with the use case diagram. Refer to the user stories using US#1, US#2, etc. At least one of the user stories, not related to user creation or authentication, must be detailed by a sequence diagram. 
+
+US#1: A user who hsaa created an account and is logged in is able to enter a goal and goal date. 
+
+US#2: 
+
+US#3: 
+
+US#4: 
+
+US#5: 
+
+US#6: 
 
 ## Sequence Diagram
 
