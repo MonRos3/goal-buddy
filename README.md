@@ -1,8 +1,9 @@
-# goal-buddy
+# Goal Buddy
 
 # Overview
 
 This flask-based web app is designed to help you reach your goals. Enter your goal, the estimated time to complete it, break the big goal into smaller milestones, and let goal buddy help keep you on-track to reach each milestone until the goal is accomplished. 
+
 
 Use this section to outline the vision for the product to be developed, including a use case diagram that shows the main user interactions with the product, in order to provide readers with an overview of the project.
 
