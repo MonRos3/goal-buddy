@@ -11,45 +11,41 @@ SMART goals are Specific, Measurable, Achievable, Relevant, and Time-bound.
 
 Enter your goal and the estimated time to complete it, why you want to achieve it, break the big goal into smaller milestones, and let Goal Buddy help keep you on-track to reach each milestone until the goal is accomplished. 
 
-Have multiple goals? No problem! Goal Buddy enables you to prioritize and re-prioritize.
-
 Let Goal Buddy help you reach your goals~
 
 # Design
 
 ## User Stories
 
-Describe the user stories designed for the project, including clear acceptance criteria and point estimate for each of them. User stories must be consistent with the use case diagram. Refer to the user stories using US#1, US#2, etc. At least one of the user stories, not related to user creation or authentication, must be detailed by a sequence diagram. 
-
 ### User Story #1: 
-As a logged-in user, I want to enter a big goal and goal completion date so that I can plan more effectively to reach an intimidating goal within a specific timeframe. 
+As a logged-in user, I want to enter a big goal and goal due date so that I can plan more effectively to reach an intimidating goal within a specific timeframe. 
 
-Given that the logged-in user has provided a goal and date, when they click enter then they are taken to a page to help break the big goal down into smaller milestones.
+Given that the logged-in user has provided a goal and date, when they click enter then they are taken to a page to explore their goal's why and ensure they have set a goal with a specific/measurable outcome.
 
 ### User Story #2:
-As a user setting a goal, I want to succeed on taking steps toward my goal even when the motivation isn't there so that I can eventually reach my goal.
+As a user setting a goal, I want to know what achieving my goal looks like and stay motivated so that I can eventually reach my goal.
 
-Given that I am setting a big goal, when I set a goal and goal date then I should be prompted with questions to better connect with why I want this goal and set a specific time each day or week to work towards it.
+Given that the user has set a specific/measurable goal and explained why they want to acheive it, when they click submit they should be prompted with questions to set specific time each day or week to work towards it.
 
 ### User Story #3: 
-As a user setting a big goal, I want to break the goal into smaller, achievable milestones so that I can make measurable progress towards the big goal.
+As a user setting a goal, I want to break the goal into smaller, achievable milestones with specific milestone due dates and rewards/celebrations so that I can make measurable progress towards the big goal.
 
-Given that I have provided a goal and goal time and why, when I proceed in setting my goal then I should be prompted to set smaller milestones, set goal dates for each milestone, and rewards for when they are achieved.
+Given that the user has provided at least one smaller milestone that will contribute to reaching their big goal and a milestone due date and reward/celebration, when they select 'set goal' they should be redirected to their profile page and see the goal there.
 
 ### User Story #4:
-As a logged-in user who has set a goal, I want to update my goal progress so that I can stay on track or adjust my goal timeline.
+As a logged-in user who has set a goal, I want to update/edit my goal progress so that I can stay on track or adjust my goal timeline.
 
-Given that I am on my goals page, when I select edit or update goal then I should be directed to a page where I can edit the goal or update my progress.
+Given that the user has provided a goal, goal due date, why they want to reach that goal, a designated time/day to work towards it, and at least one milestone, when they select edit or update goal then they should be directed to a page where they can edit the goal or update their progress.
 
 ### User Story #5:
-As a logged-in user who has set multiple goals, I want to re-prioritize so that I can keep focused on the most important goal while [hopefully] making some progress towards the less-important goals.
+As a logged-in user who has set a goal, I want to update/edit my goal progress so that I can stay on track or adjust my goal timeline.
 
-Given that [context], when [some action is carried out] then [a set of observable outcomes should occur].
+Given that the user has provided a goal, when they are on their profile page then they should be able to delete a goal they previously set.
 
 ### User Story #6: 
-As a logged-in user, I want to [perform some task] so that I can [achieve some goal].
+As a logged-in user, I want to get motivated so that I can keep working toward my goal.
 
-Given that [context], when [some action is carried out] then [a set of observable outcomes should occur].
+Given that I go to the motivation page, when I start a chat then I should get motivational quotes and tips generated.
 
 ## Sequence Diagram
 
