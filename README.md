@@ -7,9 +7,13 @@ This flask-based web app is designed to help you reach your goals.
 Have you ever struggled with achieving a goal, no matter how much you wanted it? 
 The same way a gym buddy will keep you accountable for showing up for workouts, goal buddy will help you set SMART goals leveraging popular and effective goal-setting frameworks to set you up for goal-reaching success. 
 
-Enter your goal, the estimated time to complete it, break the big goal into smaller milestones, and let goal buddy help keep you on-track to reach each milestone until the goal is accomplished. 
+SMART goals are Specific, Measurable, Achievable, Relevant, and Time-bound. 
 
-Have multiple goals? No problem! Goal buddy enables you to prioritize and re-prioritize.
+Enter your goal and the estimated time to complete it, why you want to achieve it, break the big goal into smaller milestones, and let Goal Buddy help keep you on-track to reach each milestone until the goal is accomplished. 
+
+Have multiple goals? No problem! Goal Buddy enables you to prioritize and re-prioritize.
+
+Let Goal Buddy help you reach your goals~
 
 Use this section to outline the vision for the product to be developed, including a use case diagram that shows the main user interactions with the product, in order to provide readers with an overview of the project.
 
@@ -23,23 +27,23 @@ US#1: As a logged-in user, I want to enter a big goal and goal completion date s
 
 Given that the logged-in user has provided a goal and date, when they click enter then they are taken to a page to help break the big goal down into smaller milestones.
 
-US#2: As a user setting a big goal, I want to dafs so that I can [achieve some goal].
+US#2: As a user setting a big goal, I want to succeed on taking steps toward my goal even when the motivation isn't there so that I can eventually reach my big goal.
 
-Given that [context], when [some action is carried out] then [a set of observable outcomes should occur].
+Given that I am setting a big goal, when I set a goal and goal date then I should be prompted with questions to better connect with why I want this goal.
 
-US#3: As a logged in user who has entered a goal and date, I want to break the goal into smaller, achievable milestons so that I can make measurable progress towards the big goal.
+US#3: As a user setting a big goal, I want to break the goal into smaller, achievable milestons so that I can make measurable progress towards the big goal.
 
-Given that [context], when [some action is carried out] then [a set of observable outcomes should occur].
+Given that I have provided a goal and goal time and why, when I proceed in setting my goal then I should be prompted to set smaller milestones and set goal dates for each milestone.
 
-US#4: As a logged-in user, I want to [perform some task] so that I can [achieve some goal].
+US#4: As a logged-in user who has set a goal, I want to update my goal progress so that I can stay on track or adjust my goal timeline.
 
-Given that [context], when [some action is carried out] then [a set of observable outcomes should occur].
+Given that I am on my goals page, when I select edit or update goal then I should be directed to a page where I can edit the goal or update my progress.
 
 US#5: As a logged-in user, I want to [perform some task] so that I can [achieve some goal].
 
 Given that [context], when [some action is carried out] then [a set of observable outcomes should occur].
 
-US#6: As a [type of user], I want to [perform some task] so that I can [achieve some goal].
+US#6: As a logged-in user, I want to [perform some task] so that I can [achieve some goal].
 
 Given that [context], when [some action is carried out] then [a set of observable outcomes should occur].
 
