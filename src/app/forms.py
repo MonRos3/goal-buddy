@@ -11,7 +11,7 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from wtforms_components import DateField, DateRange
 import sqlalchemy as sa
 from app import db
-from app.models import User
+from app.models import User, Goal
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])

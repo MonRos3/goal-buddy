@@ -1,0 +1,25 @@
+version: '3'
+services:
+  postgres:
+    image: postgres
+    ports: 
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=authentication
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=654321
+    volumes: 
+      - postgres_data:/var/lib/postgresql/data
+  
+  goal-buddy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: goal-buddy_container
+    ports:
+      - "5001:5000"
+    #environment:
+      #DATABASE_URL: "postgresql://postgres:654321@postgres/authentication"
+
+volumes:
+  postgres_data:
