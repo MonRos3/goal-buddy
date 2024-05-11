@@ -11,7 +11,7 @@ import sqlalchemy as sa
 from werkzeug.datastructures import MultiDict
 
 from app import app, db
-from app.forms import LoginForm
+from app.forms import LoginForm, GoalForm
 from app.models import User, Goal
 from app.forms import RegistrationForm
 
