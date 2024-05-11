@@ -5,68 +5,50 @@ Student: Monica Ball
 Description: Goal Buddy App
 '''
 
-from app import app, db, load_user
-from app.models import User, Order, Product, Customer, Administrator, Item
-from app.forms import SignUpForm, LoginForm, OrderForm, ProductForm
-from flask import render_template, redirect, url_for, request, flash
-from flask_login import login_required, login_user, logout_user, current_user
-from datetime import datetime, timezone
-import bcrypt
-            
+from flask import render_template, flash, redirect, url_for
+from flask_login import current_user, login_user, logout_user, login_required
+import sqlalchemy as sa
+from app import app, db
+from app.forms import LoginForm
+from app.models import User
+from app.forms import RegistrationForm
+
+
 @app.route('/')
 @app.route('/index')
-@app.route('/index.html')
+@login_required
+def index():
+    return render_template('index.html', title='Home')
 
-def index(): 
-    return render_template('index.html')
-
-@app.route('/users/signup', methods=['GET', 'POST'])
-def signup():
-    form = SignUpForm()
-    if form.validate_on_submit():
-        if form.passwd.data == form.passwd_confirm.data:
-            hashed_password = bcrypt.hashpw(form.passwd.data.encode('utf-8'), bcrypt.gensalt())
-            new_user = User(id=form.id.data, name=form.name.data, passwd=hashed_password)
-            db.session.add(new_user)
-            try:
-                db.session.commit()
-                return redirect(url_for('index'))
-            except:
-                db.session.rollback()
-                flash('ID already exists or error in database operation', 'error')
-        else:
-            flash('Passwords do not match', 'error')
-    return render_template('signup.html', form=form)
-
-    
-@app.route('/users/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-
-    adminUser = User.query.filter_by(id='tmota').first()
-    admin_id = adminUser.id
-
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(id=form.id.data).first()
-        if user and bcrypt.checkpw(form.passwd.data.encode('utf-8'), user.passwd):
-            login_user(user)
-            if user.id in admin_id:  # check if user ID is in admin_id list
+        user = db.session.scalar(sa.select(User).where(User.username == form.username.data))
+        if user is None or not user.check_password(form.password.data):
+            flash('Credentials are incorrect. Sorry.')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
+        return redirect(url_for('index'))
+    return render_template('login.html', title='Sign In', form=form)
 
-                # print(adminUser.creation_date)
-
-                return redirect(url_for('admin'))  # redirect admin to admin page
-            else:
-                return redirect(url_for('index'))  # redirect regular user to index page
-        else:
-            return redirect(url_for('login_failed'))  # incorrect credentials
-    return render_template('login.html', form=form)
-
-@app.route('/users/signout', methods=['GET', 'POST'])
-def signout():
+@app.route('/logout')
+def logout():
     logout_user()
     return redirect(url_for('index'))
 
-# function to handle login/signup failed
-@app.route('/users/login_failed')
-def login_failed():
-    return render_template('login_failed.html')
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data, name=form.name.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Registration finished!')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
