@@ -1,4 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Hello, {{ current_user.name }}! Welcome to Goal Buddy.</h1>
- {% endblock %}
+    <h1>Hello, {{ current_user.name }}! Welcome to Goal Buddy.</h1>
+    <div>Your next goal is:</div>
+    <div>
+        <div>{{ next_goal.title }}</div>
+        <div>{{ next_goal.goal_outcome }}</div>
+        <div>Due date: {{ next_goal.goal_due_date }}</div>
+        <div>Finished: {{ next_goal.is_completed }} </div>
+        <br>
+    </div>
+
+    <div>You're currently working on:</div>
+    {% for goal in in_progress_goals  %}
+        {% include '_goal.html' %}
+    {% endfor %}
+{% endblock %}

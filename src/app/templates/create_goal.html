@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Hello {{ user.name }}, create a new goal:</h1>
+    <hr>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }} <br>
+            {{ form.title(cols=128, rows=4) }} <br>
+            <br>
+            {{ form.goal_why.label }} <br>
+            {{ form.goal_why(cols=128, rows=4)}} <br>
+            <br>
+            {{ form.goal_outcome.label }} <br>
+            {{ form.goal_outcome(cols=128, rows=4)}} <br>
+            <br>
+            {{ form.goal_due_date.label }}
+            {{ form.goal_due_date() }} 
+            <br>
+            {% for error in form.errors %}
+
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
