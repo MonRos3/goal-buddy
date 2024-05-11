@@ -49,7 +49,73 @@ Given that I go to the motivation page, when I start a chat then I should get mo
 
 ## Sequence Diagram
 
-At least one user story, not related to user creation or authentication, must be detailed using a sequence diagram.
+### New Goal Sequence Diagram
+@startuml New Goal Sequence Diagram
+participant User
+participant Browser
+participant Web_Server
+participant Database
+
+User -> Browser: create goal button clicked
+Browser -> Web_Server: HTTP GET /users/new_goal
+Web_Server -> Browser: New Goal Form
+User -> Browser: Submit Form Pt1 {goal, goal due date}
+Browser -> Web_Server: HTTP POST /users/new_goal?pt2
+Web_Server -> Database: store username, goal, goal date
+Web_Server -> Browser: New Goal Form Pt 2
+User -> Browser: Submit Form Pt2 {goal why, specific outcome}
+Browser -> Web_Server: HTTP POST /users/new_goal?pt3
+Web_Server -> Database: store goal why, specific outcome
+Web_Server -> Browser: New Goal Form Pt 3
+User -> Browser: Submit Form Pt3 {milestones, milestone due date, milestone rewards}
+Browser -> Web_Server: HTTP POST /users/new_goal?pt2
+Web_Server -> Database: store milestones, milestone due date, milestone rewards : complete goal
+Web_Server -> Browser: Flash: Goal Saved! Redirect: /users/profile
+
+@enduml
+
+### Edit Goal Sequence Diagram
+@startuml Edit Goal Sequence Diagram
+participant User
+participant Browser
+participant Web_Server
+participant Database
+
+User -> Browser: sign-in button clicked
+Browser -> Web_Server: HTTP GET /users/signin
+Web_Server -> Browser: sign-in Form
+User -> Browser: submit Form {username, password}
+Browser -> Web_Server: HTTP POST /users/signin
+Web_Server -> Database: query user by username
+Database -> Web_Server: user object
+
+alt signin successful
+    User -> Browser: edit goal button clicked
+    alt edit_goal
+        User -> Browser: update goal
+            Browser -> Web_Server: HTTP GET /users/goals=goal_id?=
+            Web_Server -> Database: fetch goal_id
+            Database -> Web_Server: return goal_id
+            Web_Server -> Browser: redirect: goal_id page
+            User -> Browser: update goal timeline, details
+            Browser -> Web_Server: HTTP POST goal changes
+            Web_Server -> Database: store username, goal, goal date
+            Database -> Web_Server: update goal
+            Web_Server -> Browser: redirect: profile page
+        alt delete_goal
+            User -> Browser: HTTP POST {delete goal}
+            Browser -> Web_Server: delete goal
+        end
+    else no_goals_yet
+        Database -> Web_Server: no goals [null]
+        Web_Server -> Browser: null
+        Browser -> User: "No goals yet! Create a goal?" <button>
+    end
+else signin failed
+     Web_Server -> Browser: sign-in failed
+    Browser -> User: sign-in failed
+end
+@enduml
 
 ## Model 
 

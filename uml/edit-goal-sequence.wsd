@@ -4,38 +4,38 @@ participant Browser
 participant Web_Server
 participant Database
 
-User -> Browser: create goal button clicked
-Browser -> Web_Server: HTTP GET /users/new_goal
-Web_Server -> Browser: Sign-in Form
-User -> Browser: Submit Form {username, password}
+User -> Browser: sign-in button clicked
+Browser -> Web_Server: HTTP GET /users/signin
+Web_Server -> Browser: sign-in Form
+User -> Browser: submit Form {username, password}
 Browser -> Web_Server: HTTP POST /users/signin
 Web_Server -> Database: query user by username
 Database -> Web_Server: user object
 
 alt signin successful
-    Web_Server -> Browser: Sign-in successful
-    Browser -> User: Sign-in successful
-    User -> Web_Server: HTTP GET {room_num, date, times}
-    Web_Server -> Database: query room availability
-    alt available
-        Database -> Web_Server: room available
-        Web_Server -> Browser: confirm reservation?
-        Browser -> User: confirm reservation?
-        alt confirm_reservation
-            User -> Browser: HTTP POST {confirm}
-            Browser -> Web_Server: confirm
-            Web_Server -> Database: confirm {store reservation}
-        else decline_reservation
-            User -> Browser: HTTP POST {decline}
-            Browser -> Web_Server: decline
+    User -> Browser: edit goal button clicked
+    alt edit_goal
+        User -> Browser: update goal
+            Browser -> Web_Server: HTTP GET /users/goals=goal_id?=
+            Web_Server -> Database: fetch goal_id
+            Database -> Web_Server: return goal_id
+            Web_Server -> Browser: redirect: goal_id page
+            User -> Browser: update goal timeline, details
+            Browser -> Web_Server: HTTP POST goal changes
+            Web_Server -> Database: store username, goal, goal date
+            Database -> Web_Server: update goal
+            Web_Server -> Browser: redirect: profile page
+        alt delete_goal
+            User -> Browser: HTTP POST {delete goal}
+            Browser -> Web_Server: delete goal
         end
-    else unavailable
-        Database -> Web_Server: room unavailable
-        Web_Server -> Browser: not available
-        Browser -> User: not available
+    else no_goals_yet
+        Database -> Web_Server: no goals [null]
+        Web_Server -> Browser: null
+        Browser -> User: "No goals yet! Create a goal?" <button>
     end
 else signin failed
-     Web_Server -> Browser: Sign-in failed
-    Browser -> User: Sign-in failed
+     Web_Server -> Browser: sign-in failed
+    Browser -> User: sign-in failed
 end
 @enduml
