@@ -1,0 +1,41 @@
+@startuml New Goal Sequence Diagram
+participant User
+participant Browser
+participant Web_Server
+participant Database
+
+User -> Browser: create goal button clicked
+Browser -> Web_Server: HTTP GET /users/new_goal
+Web_Server -> Browser: Sign-in Form
+User -> Browser: Submit Form {username, password}
+Browser -> Web_Server: HTTP POST /users/signin
+Web_Server -> Database: query user by username
+Database -> Web_Server: user object
+
+alt signin successful
+    Web_Server -> Browser: Sign-in successful
+    Browser -> User: Sign-in successful
+    User -> Web_Server: HTTP GET {room_num, date, times}
+    Web_Server -> Database: query room availability
+    alt available
+        Database -> Web_Server: room available
+        Web_Server -> Browser: confirm reservation?
+        Browser -> User: confirm reservation?
+        alt confirm_reservation
+            User -> Browser: HTTP POST {confirm}
+            Browser -> Web_Server: confirm
+            Web_Server -> Database: confirm {store reservation}
+        else decline_reservation
+            User -> Browser: HTTP POST {decline}
+            Browser -> Web_Server: decline
+        end
+    else unavailable
+        Database -> Web_Server: room unavailable
+        Web_Server -> Browser: not available
+        Browser -> User: not available
+    end
+else signin failed
+     Web_Server -> Browser: Sign-in failed
+    Browser -> User: Sign-in failed
+end
+@enduml

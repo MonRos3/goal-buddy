@@ -1,0 +1,45 @@
+@startuml Goal Buddy Class Diagram
+
+User <|-- App_User
+User <|-- Administrator
+
+Goal "1" *--> "0..N" Milestone : Milestones
+App_User "1" *--> "1..N" Goal: Goals
+
+class User {
+    id: string
+    name: string
+    password: string
+    creationDate: datetime
+}
+
+class App_User {
+    num_goals: integer
+    + getGoals()
+}
+
+class Administrator {
+    + getUser()
+}
+
+class Goal {
+    goal_title: string
+    goal_due_date: datetime
+    goal_why: string
+    goal_outcome: string
+    goal_status: boolean
+}
+
+class Milestone{
+    milestone_title: string
+    milestone_due_date: datetime
+    milestone_reward: string
+    milestone_status: boolean
+}
+
+class Motivation{
+    title: string
+    type: string
+    text: string
+}
+@enduml

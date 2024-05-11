@@ -53,7 +53,80 @@ At least one user story, not related to user creation or authentication, must be
 
 ## Model 
 
-At a minimum, this section should have a class diagram that succinctly describes the model classes used in the project, including their associations.
+### Class Diagram
+@startuml Goal Buddy Class Diagram
+
+User <|-- App_User
+User <|-- Administrator
+
+Goal "1" *--> "0..N" Milestone : Milestones
+App_User "1" *--> "1..N" Goal: Goals
+
+class User {
+    id: string
+    name: string
+    password: string
+    creationDate: datetime
+}
+
+class App_User {
+    num_goals: integer
+    + getGoals()
+}
+
+class Administrator {
+    + getUser()
+}
+
+class Goal {
+    goal_title: string
+    goal_due_date: datetime
+    goal_why: string
+    goal_outcome: string
+    goal_status: boolean
+}
+
+class Milestone{
+    milestone_title: string
+    milestone_due_date: datetime
+    milestone_reward: string
+    milestone_status: boolean
+}
+
+class Motivation{
+    title: string
+    type: string
+    text: string
+}
+@enduml
+
+### Use-Case Diagram
+@startuml Use-Case Diagram
+
+:User:
+:Admin:
+:App_User:
+
+User <|-- Admin
+User <|-- App_User
+
+package GoalBuddy{
+Admin --> (authenticate)
+Admin --> (view list of users)
+
+App_User --> (sign up)
+App_User --> (login)
+App_User --> (create new goal)
+App_User --> (edit goal)
+App_User --> (delete goal)
+App_User --> (complete goal)
+App_User --> (create new milestone)
+App_User --> (edit milestone)
+App_User --> (delete milestone)
+App_User --> (complete milestone)
+App_User --> (motivate)
+}
+@enduml
 
 # Development Process 
 
@@ -64,17 +137,15 @@ There are 6 Phases: (1) Planning, (2) Development, (3) Testing, (4) Polishing, (
 |Sprint#|Goals|Start|End|Done|Observations|
 |---|---|---|---|---|---|
 |1|Phase 1 Pt 1: Planning |05/03/24|05/10/24 15:00|Readme, dev timeline |Planning seemed like it would be easy, but the relative freedom of the assignment resulted in choice-paralysis.|
-|2|Phase 1 Pt 2: Diagrams |05/03/24 15:00|05/10/24 16:00|...|
+|2|Phase 1 Pt 2: Diagrams |05/03/24 15:00|05/10/24 16:00|Completed class diagram, use-case, new-goal sequence, and edit-sequence diagrams |Diagrams complete. |
 |3|Phase 2 Pt 1: Baseline App |05/10/24 16:00|05/10/24 18:00|Baseline App, using SQLite for testing, minimize complexity|...|
 |4|Phase 2 Pt 2: US#1, US#2, US#3 |05/10/24 18:00|05/10/24 20:00|US#1, US#2, US#3|...|
-|5|Phase 2 Pt 2:US#4, US#5 |05/10/24 20:00|05/10/24 22:00|US#4, US#5|...|
-|6|Phase 2 Pt 2: US#6 |05/10/24 22:00|05/11/24 00:00|US#6|...|
+|5|Phase 2 Pt 3:US#4, US#5 |05/10/24 20:00|05/10/24 22:00|US#4, US#5|...|
+|6|Phase 2 Pt 4: US#6 |05/10/24 22:00|05/11/24 00:00|US#6|...|
 |7|Phase 3: Testing |05/11/24 08:00|05/11/24 10:30|Implement white box [unit tests] and black box [Selenium] tests, generate testing coverage statement|...|
 |8|Phase 4: Polishing |05/11/24 10:30|05/11/24 13:00|Refine CSS, pages, and add CSS animations |...|
 |9|Phase 5: Deployment & Orchestration |05/11/24 13:00|05/11/24 14:30|Set up Docker and Docker Compose|...|
 |10|Phase 6: DB Migration |05/11/24 15:00|05/11/24 16:00|Migrate to postgres, chose to migrate so postgres service being up or down would not impact project progress |...|
-
-Use the observations column to report problems encountered during a sprint and/or to reflect on how the team has continuously improved its work. If you prefer, you can use the same format used in the project 2 (sprint markdown files). 
 
 # Testing 
 

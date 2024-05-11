@@ -1,0 +1,26 @@
+@startuml Use-Case Diagram
+
+:User:
+:Admin:
+:App_User:
+
+User <|-- Admin
+User <|-- App_User
+
+package GoalBuddy{
+Admin --> (authenticate)
+Admin --> (view list of users)
+
+App_User --> (sign up)
+App_User --> (login)
+App_User --> (create new goal)
+App_User --> (edit goal)
+App_User --> (delete goal)
+App_User --> (complete goal)
+App_User --> (create new milestone)
+App_User --> (edit milestone)
+App_User --> (delete milestone)
+App_User --> (complete milestone)
+App_User --> (motivate)
+}
+@enduml
