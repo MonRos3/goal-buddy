@@ -6,34 +6,38 @@ Description: Goal Buddy App
 '''
 
 from flask import Flask
+from app.config import Config
+from flask_sqlalchemy import SQLAlchemy
+
 from flask_login import LoginManager
-import os
-import bcrypt
-
-app = Flask("Goal Buddy Web App")
-app.secret_key = 'super-duper top secret key'
-app.config['USER SIGN UP'] = 'User Sign Up'
-app.config['USER SIGNIN'] = 'User Sign In'
-
-# db initialization - probably going to be cassandra
-
-
-# import models after initializing db
-from app import models
+app = Flask(__name__)
+app.config.from_object(Config)
+# db initialization - going to migrate to postgreSQL
+db = SQLAlchemy(app)
+#db.init_app(app)
 
 # login manager
-login_manager = LoginManager()
-login_manager.init_app(app)
+login = LoginManager(app)
+login.login_view = 'login'
 
-from app.models import User
+from app import routes, models
 
-# user_loader callback
-@login_manager.user_loader
-def load_user(id):
-    try: 
-        return db.session.query(User).filter(User.id==id).one()
-    except: 
-        return None
+with app.app_context():
+    db.create_all()
 
-# import routes after initializing login_manager
-from app import routes
+    from app import db
+    from app.models import User
+    from werkzeug.security import generate_password_hash
+    
+    test_user = User.query.filter_by(username='testuser').first()
+    if not test_user:
+        test_password = "$Test123"
+        test_user = User(
+            username = "testuser",
+            email = "testuser@example.org",
+            name = "Test User",
+            password_hash = generate_password_hash(test_password) 
+        )
+
+        db.session.add(test_user)
+        db.session.commit()
