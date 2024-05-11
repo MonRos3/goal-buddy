@@ -75,47 +75,7 @@ Web_Server -> Browser: Flash: Goal Saved! Redirect: /users/profile
 @enduml
 
 ### Edit Goal Sequence Diagram
-@startuml Edit Goal Sequence Diagram </br>
-participant User </br>
-participant Browser </br>
-participant Web_Server </br>
-participant Database </br>
-</br>
-User -> Browser: sign-in button clicked </br>
-Browser -> Web_Server: HTTP GET /users/signin </br>
-Web_Server -> Browser: sign-in Form </br>
-User -> Browser: submit Form {username, password} </br>
-Browser -> Web_Server: HTTP POST /users/signin </br>
-Web_Server -> Database: query user by username </br>
-Database -> Web_Server: user object </br>
-</br>
-alt signin successful
-    User -> Browser: edit goal button clicked
-    alt edit_goal
-        User -> Browser: update goal
-            Browser -> Web_Server: HTTP GET /users/goals=goal_id?=
-            Web_Server -> Database: fetch goal_id
-            Database -> Web_Server: return goal_id
-            Web_Server -> Browser: redirect: goal_id page
-            User -> Browser: update goal timeline, details
-            Browser -> Web_Server: HTTP POST goal changes
-            Web_Server -> Database: store username, goal, goal date
-            Database -> Web_Server: update goal
-            Web_Server -> Browser: redirect: profile page
-        alt delete_goal
-            User -> Browser: HTTP POST {delete goal}
-            Browser -> Web_Server: delete goal
-        end
-    else no_goals_yet
-        Database -> Web_Server: no goals [null]
-        Web_Server -> Browser: null
-        Browser -> User: "No goals yet! Create a goal?" <button>
-    end
-else signin failed
-     Web_Server -> Browser: sign-in failed
-    Browser -> User: sign-in failed
-end
-@enduml
+![Edit Goal Sequence Diagram, syntax in UML folder](./img/edit-goal-sequence-diagram.png "Edit Goal Sequence Diagram")
 
 ## Model 
 
