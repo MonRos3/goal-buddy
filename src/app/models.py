@@ -5,7 +5,7 @@ Student: Monica Ball
 Description: Goal Buddy App
 '''
 
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta, date
 from typing import Optional
 import sqlalchemy as sa
 import sqlalchemy.orm as so
@@ -19,7 +19,7 @@ class User(UserMixin, db.Model):
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     name: so.Mapped[str] = so.mapped_column(sa.String(64), index=True)
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
-
+    # field to link goals to user
     goals: so.WriteOnlyMapped['Goal'] = so.relationship(back_populates='goal_owner')
 
     def __repr__(self):
@@ -34,6 +34,16 @@ class User(UserMixin, db.Model):
     @login.user_loader
     def load_user(id):
         return db.session.get(User, int(id))
+    
+    def get_goals(self):
+        print(self.id)
+        return sa.select(Goal).where(Goal.user_id == self.id)
+    
+    def get_completed_goals(self):
+        return sa.select(Goal).where(sa.and_(Goal.user_id == self.id, Goal.is_completed == True))
+    
+    def get_in_progress_goals(self):
+        return sa.select(Goal).where(sa.and_(Goal.user_id == self.id, Goal.is_completed == False)).order_by(Goal.timestamp.desc())
 
 class Goal(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
@@ -42,9 +52,12 @@ class Goal(db.Model):
     goal_outcome: so.Mapped[str] = so.mapped_column(sa.String(256))
     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),index=True)
     timestamp: so.Mapped[datetime] = so.mapped_column(index=True, default=lambda: datetime.now(timezone.utc))
-    goal_due_date: so.Mapped[datetime] = so.mapped_column(index=True, default=lambda: datetime.now(timezone.utc) + datetime.timedelta(days=7))
-
+    goal_due_date: so.Mapped[date] = so.mapped_column(index=True, default=date.today() + timedelta(days=7))
+    is_completed: so.Mapped[bool] = so.mapped_column(default=False)
     goal_owner: so.Mapped[User] = so.relationship(back_populates='goals')
 
     def __repr__(self):
         return '<Goal {}>'.format(self.title)
+
+    def complete_goal(self):
+        self.is_completed = True

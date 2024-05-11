@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Hello {{ user.name }}, your goals are below:</h1>
+    <hr>
+    <h3>All your goals:</h3>
+    {% for goal in goals %}
+        {% include '_goal.html' %}
+    {% endfor %}
+{% endblock %}

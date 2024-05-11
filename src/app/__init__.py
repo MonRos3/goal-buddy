@@ -26,9 +26,10 @@ with app.app_context():
     db.create_all()
 
     from app import db
-    from app.models import User
+    from app.models import User, Goal
     from werkzeug.security import generate_password_hash
     
+    # create test user
     test_user = User.query.filter_by(username='testuser').first()
     if not test_user:
         test_password = "$Test123"
@@ -40,4 +41,18 @@ with app.app_context():
         )
 
         db.session.add(test_user)
+        db.session.commit()
+
+    # create test goal
+    test_goal = Goal.query.filter_by(title='My First Goal').first()
+    if not test_goal:
+        test_goal = Goal(
+            title = "My First Goal",
+            goal_why = "For testing a Flask app!",
+            goal_outcome = "Complete Project 3",
+            user_id = 1,
+            is_completed = False
+        )
+
+        db.session.add(test_goal)
         db.session.commit()

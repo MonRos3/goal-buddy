@@ -5,8 +5,10 @@ Student: Monica Ball
 Description: Goal Buddy App
 '''
 from flask_wtf import FlaskForm
+from datetime import datetime, date
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from wtforms_components import DateField, DateRange
 import sqlalchemy as sa
 from app import db
 from app.models import User
@@ -34,3 +36,13 @@ class RegistrationForm(FlaskForm):
         user = db.session.scalar(sa.select(User).where(User.email == email.data))
         if user is not None:
             raise ValidationError('Please use a different email address.')
+
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')
+
+class GoalForm(FlaskForm):
+    title = StringField('What is your goal?', validators=[DataRequired()], render_kw={"placeholder": "Finish the Deck"})
+    goal_why = StringField('Why do you want to achieve this goal?', validators=[DataRequired()], render_kw={"placeholder": "The deck needs refinishing"})
+    goal_outcome = StringField('What is your specific measurable outcome?', validators=[DataRequired()], render_kw={"placeholder": "Deck sealant has been applied"})
+    goal_due_date = DateField('When do you want to achive this goal?', validators=[DataRequired()])
+    submit = SubmitField('Submit')
