@@ -75,20 +75,20 @@ Web_Server -> Browser: Flash: Goal Saved! Redirect: /users/profile
 @enduml
 
 ### Edit Goal Sequence Diagram
-@startuml Edit Goal Sequence Diagram
-participant User
-participant Browser
-participant Web_Server
-participant Database
-
-User -> Browser: sign-in button clicked
-Browser -> Web_Server: HTTP GET /users/signin
-Web_Server -> Browser: sign-in Form
-User -> Browser: submit Form {username, password}
-Browser -> Web_Server: HTTP POST /users/signin
-Web_Server -> Database: query user by username
-Database -> Web_Server: user object
-
+@startuml Edit Goal Sequence Diagram </br>
+participant User </br>
+participant Browser </br>
+participant Web_Server </br>
+participant Database </br>
+</br>
+User -> Browser: sign-in button clicked </br>
+Browser -> Web_Server: HTTP GET /users/signin </br>
+Web_Server -> Browser: sign-in Form </br>
+User -> Browser: submit Form {username, password} </br>
+Browser -> Web_Server: HTTP POST /users/signin </br>
+Web_Server -> Database: query user by username </br>
+Database -> Web_Server: user object </br>
+</br>
 alt signin successful
     User -> Browser: edit goal button clicked
     alt edit_goal
