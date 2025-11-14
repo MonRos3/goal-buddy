@@ -19,6 +19,7 @@ db = SQLAlchemy(app)
 # login manager
 login = LoginManager(app)
 login.login_view = 'login'
+login.login_message = None
 
 from app import routes, models
 from app.quotes import get_random_quote

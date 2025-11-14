@@ -14,13 +14,14 @@
         <div class="nav">
             <div class="logo">Goal Buddy</div>
             <div class="menu">
-                <a href="{{ url_for('index') }}">Home</a>
-                {% if current_user.is_anonymous %}
-                    <a href="{{ url_for('login') }}">Login</a>
-                {% else %}
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('home') }}">Home</a>
                     <a href="{{ url_for('user', username=current_user.username) }}">My Goals</a>
                     <a href="{{ url_for('create_goal', username=current_user.username) }}">Create Goal</a>
                     <a href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">Login</a>
+                    <a href="{{ url_for('register') }}">Register</a>
                 {% endif %}
             </div>
         </div>

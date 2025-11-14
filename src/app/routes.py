@@ -19,9 +19,17 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.png', mimetype='image/png')
 
 @app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
-@login_required
 def index():
+    if current_user.is_authenticated:
+        next_goal = db.session.scalars(current_user.get_goals().order_by(Goal.goal_due_date.asc())).first()
+        in_progress_goals = db.session.scalars(current_user.get_in_progress_goals()).all()
+        return render_template('index.html', title='Home', next_goal=next_goal, in_progress_goals=in_progress_goals)
+    else:
+        return redirect(url_for('login'))
+
+@app.route('/home', methods=['GET', 'POST'])
+@login_required
+def home():
     next_goal = db.session.scalars(current_user.get_goals().order_by(Goal.goal_due_date.asc())).first()
     in_progress_goals = db.session.scalars(current_user.get_in_progress_goals()).all()
     return render_template('index.html', title='Home', next_goal=next_goal, in_progress_goals=in_progress_goals)
@@ -29,7 +37,7 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
         user = db.session.scalar(sa.select(User).where(User.username == form.username.data))
@@ -37,18 +45,18 @@ def login():
             flash('Credentials are incorrect. Sorry.')
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
-        return redirect(url_for('index'))
+        return redirect(url_for('home'))
     return render_template('login.html', title='Sign In', form=form)
 
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data, name=form.name.data)

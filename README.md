@@ -13,6 +13,8 @@ Enter your goal and the estimated time to complete it, why you want to achieve i
 
 Let Goal Buddy help you reach your goals~
 
+![App Login Page](./images/app-image.png)
+
 ## How to Use
 
 1. **Deploy the application** using Docker Compose:
@@ -83,150 +85,21 @@ Given that I go to the motivation page, when I start a chat then I should get mo
 
 ### New Goal Sequence Diagram
 
-@startuml New Goal Sequence Diagram
-participant User
-participant Browser
-participant Web_Server
-participant Database
-
-User -> Browser: create goal button clicked
-Browser -> Web_Server: HTTP GET /users/new_goal
-Web_Server -> Browser: New Goal Form
-User -> Browser: Submit Form Pt1 {goal, goal due date}
-Browser -> Web_Server: HTTP POST /users/new_goal?pt2
-Web_Server -> Database: store username, goal, goal date
-Web_Server -> Browser: New Goal Form Pt 2
-User -> Browser: Submit Form Pt2 {goal why, specific outcome}
-Browser -> Web_Server: HTTP POST /users/new_goal?pt3
-Web_Server -> Database: store goal why, specific outcome
-Web_Server -> Browser: New Goal Form Pt 3
-User -> Browser: Submit Form Pt3 {milestones, milestone due date, milestone rewards}
-Browser -> Web_Server: HTTP POST /users/new_goal?pt2
-Web_Server -> Database: store milestones, milestone due date, milestone rewards : complete goal
-Web_Server -> Browser: Flash: Goal Saved! Redirect: /users/profile
-
-@enduml
+![New Goal Sequence Diagram Image](./uml/diagram-images/new-goal-sequence.png)
 
 ### Edit Goal Sequence Diagram
 
-@startuml Edit Goal Sequence Diagram
-participant User
-participant Browser
-participant Web_Server
-participant Database
-
-User -> Browser: sign-in button clicked
-Browser -> Web_Server: HTTP GET /users/signin
-Web_Server -> Browser: sign-in Form
-User -> Browser: submit Form {username, password}
-Browser -> Web_Server: HTTP POST /users/signin
-Web_Server -> Database: query user by username
-Database -> Web_Server: user object
-
-alt signin successful
-User -> Browser: edit goal button clicked
-alt edit_goal
-User -> Browser: update goal
-Browser -> Web_Server: HTTP GET /users/goals=goal_id?=
-Web_Server -> Database: fetch goal_id
-Database -> Web_Server: return goal_id
-Web_Server -> Browser: redirect: goal_id page
-User -> Browser: update goal timeline, details
-Browser -> Web_Server: HTTP POST goal changes
-Web_Server -> Database: store username, goal, goal date
-Database -> Web_Server: update goal
-Web_Server -> Browser: redirect: profile page
-alt delete_goal
-User -> Browser: HTTP POST {delete goal}
-Browser -> Web_Server: delete goal
-end
-else no_goals_yet
-Database -> Web_Server: no goals [null]
-Web_Server -> Browser: null
-Browser -> User: "No goals yet! Create a goal?" <button>
-end
-else signin failed
-Web_Server -> Browser: sign-in failed
-Browser -> User: sign-in failed
-end
-@enduml
+![Edit Goal Sequence Diagram Image](./uml/diagram-images/edit-goal-sequence.png)
 
 ## Model
 
 ### Class Diagram
 
-@startuml Goal Buddy Class Diagram
-
-User <|-- App_User
-User <|-- Administrator
-
-Goal "1" _--> "0..N" Milestone : Milestones
-App_User "1" _--> "1..N" Goal: Goals
-
-class User {
-id: string
-name: string
-password: string
-creationDate: datetime
-}
-
-class App_User {
-num_goals: integer + getGoals()
-}
-
-class Administrator { + getUser()
-}
-
-class Goal {
-goal_title: string
-goal_due_date: datetime
-goal_why: string
-goal_outcome: string
-goal_status: boolean
-}
-
-class Milestone{
-milestone_title: string
-milestone_due_date: datetime
-milestone_reward: string
-milestone_status: boolean
-}
-
-class Motivation{
-title: string
-type: string
-text: string
-}
-@enduml
+![Class Diagram Image](./uml/diagram-images/class-diagram.png)
 
 ### Use-Case Diagram
 
-@startuml Use-Case Diagram
-
-:User:
-:Admin:
-:App_User:
-
-User <|-- Admin
-User <|-- App_User
-
-package GoalBuddy{
-Admin --> (authenticate)
-Admin --> (view list of users)
-
-App_User --> (sign up)
-App_User --> (login)
-App_User --> (create new goal)
-App_User --> (edit goal)
-App_User --> (delete goal)
-App_User --> (complete goal)
-App_User --> (create new milestone)
-App_User --> (edit milestone)
-App_User --> (delete milestone)
-App_User --> (complete milestone)
-App_User --> (motivate)
-}
-@enduml
+![Use-Case Diagram Image](./uml/diagram-images/use-case.png)
 
 # Development Process
 
