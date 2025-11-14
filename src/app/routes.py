@@ -1,8 +1,5 @@
 '''
-CS3250 - Software Development Methods and Tools - Spring 2024
-Instructor: Thyago Mota
-Student: Monica Ball
-Description: Goal Buddy App
+Routes; includes user authentication, goal and milestone management.
 '''
 
 from flask import render_template, flash, redirect, url_for

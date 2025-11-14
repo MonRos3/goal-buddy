@@ -1,6 +1,5 @@
 '''
-quotes.py
-Description: Curated list of motivational quotes
+Curated list of motivational quotes.
 '''
 
 import random

@@ -1,5 +1,5 @@
 '''
-Database models for the Goal Buddy App.
+Database models; includes User, Goal, and Milestone models.
 '''
 
 from datetime import datetime, timezone, timedelta, date

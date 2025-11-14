@@ -1,8 +1,5 @@
 '''
-CS3250 - Software Development Methods and Tools - Spring 2024
-Instructor: Thyago Mota
-Student: Monica Ball
-Description: Goal Buddy App
+Flask forms; includes login, registration, goal, and milestone forms.
 '''
 from flask_wtf import FlaskForm
 from datetime import datetime, date

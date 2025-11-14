@@ -2,7 +2,7 @@
 
 # Overview
 
-This flask-based web app is designed to help you reach your goals.
+This flask-based web app is designed to help you reach your goals, originally created for a class final project. Now it is being updated for fun as a side project.
 
 Have you ever struggled with achieving a goal, no matter how much you wanted it?
 The same way a gym buddy will keep you accountable for showing up for workouts, goal buddy will help you set SMART goals leveraging popular and effective goal-setting frameworks to set you up for goal-reaching success.
