@@ -176,11 +176,3 @@ python3 -m pytest tests/ --cov=src/app --cov-report=term --cov-report=html
 ```
 
 HTML coverage report is generated in `htmlcov/` directory.
-
-# Deployment
-
-The final product must demonstrate the integrity of at least 5 of the 6 planned user stories. The final product must be packaged in the form of a docker image. The project should be able to be deployed using:
-
-```
-docker compose up
-```
