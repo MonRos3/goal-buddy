@@ -1,17 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Hello, {{ current_user.name }}! Welcome to Goal Buddy.</h1>
-    <div>Your next goal is:</div>
-    <div>
-        <div>{{ next_goal.title }}</div>
-        <div>{{ next_goal.goal_outcome }}</div>
-        <div>Due date: {{ next_goal.goal_due_date }}</div>
-        <div>Finished: {{ next_goal.is_completed }} </div>
-        <br>
-    </div>
+    <h1>Hello, {{ current_user.name }}!</h1>
+    <p>Welcome back to Goal Buddy. Let's make today count!</p>
 
-    <div>You're currently working on:</div>
-    {% for goal in in_progress_goals  %}
-        {% include '_goal.html' %}
-    {% endfor %}
+    {% if next_goal %}
+        <div class="card">
+            <h2>Your Next Goal</h2>
+            <h3>{{ next_goal.title }}</h3>
+            <p><strong>What success looks like:</strong> {{ next_goal.goal_outcome }}</p>
+            <p><strong>Due date:</strong> {{ next_goal.goal_due_date.strftime('%B %d, %Y') }}</p>
+            <p><strong>Status:</strong>
+                {% if next_goal.is_completed %}
+                    <span style="color: rgb(100, 200, 100);">✓ Completed</span>
+                {% else %}
+                    <span style="color: rgb(220, 160, 60);">In Progress</span>
+                {% endif %}
+            </p>
+            <a href="{{ url_for('user', username=current_user.username) }}" class="button">View All Goals</a>
+        </div>
+    {% endif %}
+
+    {% if in_progress_goals %}
+        <h2>Currently Working On</h2>
+        {% for goal in in_progress_goals %}
+            <div class="card">
+                <h3>{{ goal.title }}</h3>
+                <p><strong>What success looks like:</strong> {{ goal.goal_outcome }}</p>
+                <p><strong>Due date:</strong> {{ goal.goal_due_date.strftime('%B %d, %Y') }}</p>
+                <a href="{{ url_for('user', username=current_user.username) }}" class="button button-small">Manage Goal</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="card">
+            <h2>Ready to get started?</h2>
+            <p>You don't have any goals yet. Create your first goal and start your journey!</p>
+            <a href="{{ url_for('create_goal', username=current_user.username) }}" class="button button-success">Create Goal</a>
+        </div>
+    {% endif %}
 {% endblock %}

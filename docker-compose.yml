@@ -1,16 +1,15 @@
-version: '3'
 services:
   postgres:
-    image: postgres
-    ports: 
+    image: postgres:16
+    ports:
       - 5432:5432
     environment:
       - POSTGRES_DB=authentication
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=654321
-    volumes: 
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:    
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       interval: 10s
       timeout: 60s
@@ -28,7 +27,7 @@ services:
     links:
       - postgres
     ports:
-      - "5001:5000"
+      - "5001:5001"
     environment:
       DATABASE_URL: "postgresql://postgres:654321@postgres/authentication"
 

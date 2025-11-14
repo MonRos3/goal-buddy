@@ -1,35 +1,42 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Edit Goal</h1>
-    <hr>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.title.label }} <br>
-            {{ form.title(cols=128, rows=4) }} <br>
-            <br>
-            {{ form.goal_why.label }} <br>
-            {{ form.goal_why(cols=128, rows=4)}} <br>
-            <br>
-            {{ form.goal_outcome.label }} <br>
-            {{ form.goal_outcome(cols=128, rows=4)}} <br>
-            <br>
-            {{ form.goal_due_date.label }}
-            {% if goal.is_date_locked %}
-                {{ form.goal_due_date(disabled=True) }}
-                <span style="color: rgb(234, 118, 118);"> (Date is locked)</span>
-            {% else %}
-                {{ form.goal_due_date() }}
-            {% endif %}
-            <br>
-            <br>
-            {{ form.is_date_locked() }} {{ form.is_date_locked.label }}
-            <br>
-            {% for error in form.errors %}
+    <div class="card">
+        <h1>Edit Goal</h1>
+        <p>Update your goal details to keep it relevant and achievable.</p>
 
-            <span style="color: red;">[{{ error }}]</span>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.title.label }} <br>
+                {{ form.title(cols=128, rows=4) }} <br>
+            </p>
+            <p>
+                {{ form.goal_why.label }} <br>
+                {{ form.goal_why(cols=128, rows=4)}} <br>
+            </p>
+            <p>
+                {{ form.goal_outcome.label }} <br>
+                {{ form.goal_outcome(cols=128, rows=4)}} <br>
+            </p>
+            <p>
+                {{ form.goal_due_date.label }}
+                {% if goal.is_date_locked %}
+                    {{ form.goal_due_date(disabled=True) }}
+                    <span style="color: rgb(248, 74, 74);"> (Date is locked for accountability)</span>
+                {% else %}
+                    {{ form.goal_due_date() }}
+                {% endif %}
+            </p>
+            <p>
+                {{ form.is_date_locked() }} {{ form.is_date_locked.label }}
+            </p>
+            {% for error in form.errors %}
+                <span style="color: rgb(248, 74, 74);">[{{ error }}]</span>
             {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+            <p>
+                {{ form.submit() }}
+                <a href="{{ url_for('user', username=user.username) }}" class="button button-small">Cancel</a>
+            </p>
+        </form>
+    </div>
 {% endblock %}

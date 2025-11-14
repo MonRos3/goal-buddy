@@ -2,16 +2,21 @@
 Routes; includes user authentication, goal and milestone management.
 '''
 
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, send_from_directory
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 from werkzeug.datastructures import MultiDict
+import os
 
 from app import app, db
 from app.forms import LoginForm, GoalForm, MilestoneForm
 from app.models import User, Goal, Milestone
 from app.forms import RegistrationForm
 
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.png', mimetype='image/png')
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])

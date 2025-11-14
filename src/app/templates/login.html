@@ -1,26 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Sign In</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}<br>
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}<br>
-            {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    <div class="card card-centered">
+        <h1>Sign In</h1>
+        <p>Welcome back! Enter your credentials to access your goals.</p>
 
-    <p>Need to sign-up: <a href="{{ url_for('register') }}">Click here to Register!</a></p>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username(size=32) }}<br>
+                {% for error in form.username.errors %}
+                <span style="color: rgb(248, 74, 74);">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}<br>
+                {% for error in form.password.errors %}
+                <span style="color: rgb(248, 74, 74);">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+            <p class="form-centered">{{ form.submit() }}</p>
+        </form>
+
+        <p style="text-align: center;">Don't have an account? <a href="{{ url_for('register') }}" class="button button-success button-small">Register</a></p>
+    </div>
 {% endblock %}

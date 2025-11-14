@@ -1,24 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Edit Milestone</h1>
-    <hr>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.milestone_title.label }} <br>
-            {{ form.milestone_title(size=64) }} <br>
-            <br>
-            {{ form.milestone_due_date.label }}
-            {{ form.milestone_due_date() }}
-            <br>
-            <br>
-            {{ form.milestone_reward.label }} <br>
-            {{ form.milestone_reward(size=64)}} <br>
-            <br>
+    <div class="card">
+        <h1>Edit Milestone</h1>
+        <h3>For goal: {{ goal.title }}</h3>
+        <p>Update your milestone to stay on track.</p>
+
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.milestone_title.label }} <br>
+                {{ form.milestone_title(size=64) }} <br>
+            </p>
+            <p>
+                {{ form.milestone_due_date.label }}
+                {{ form.milestone_due_date() }}
+            </p>
+            <p>
+                {{ form.milestone_reward.label }} <br>
+                {{ form.milestone_reward(size=64)}} <br>
+            </p>
             {% for error in form.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+                <span style="color: rgb(248, 74, 74);">[{{ error }}]</span>
             {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+            <p>
+                {{ form.submit() }}
+                <a href="{{ url_for('user', username=user.username) }}" class="button button-small">Cancel</a>
+            </p>
+        </form>
+    </div>
 {% endblock %}
