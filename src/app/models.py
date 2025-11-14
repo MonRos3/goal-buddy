@@ -1,8 +1,5 @@
 '''
-CS3250 - Software Development Methods and Tools - Spring 2024
-Instructor: Thyago Mota
-Student: Monica Ball
-Description: Goal Buddy App
+Database models for the Goal Buddy App.
 '''
 
 from datetime import datetime, timezone, timedelta, date
@@ -53,11 +50,25 @@ class Goal(db.Model):
     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),index=True)
     timestamp: so.Mapped[datetime] = so.mapped_column(index=True, default=lambda: datetime.now(timezone.utc))
     goal_due_date: so.Mapped[date] = so.mapped_column(index=True, default=date.today() + timedelta(days=7))
+    is_date_locked: so.Mapped[bool] = so.mapped_column(default=False)
     is_completed: so.Mapped[bool] = so.mapped_column(default=False)
     goal_owner: so.Mapped[User] = so.relationship(back_populates='goals')
+    milestones: so.WriteOnlyMapped['Milestone'] = so.relationship(back_populates='milestone_goal', cascade='all, delete-orphan', passive_deletes=True)
 
     def __repr__(self):
         return '<Goal {}>'.format(self.title)
 
     def complete_goal(self):
         self.is_completed = True
+
+class Milestone(db.Model):
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    milestone_title: so.Mapped[str] = so.mapped_column(sa.String(256))
+    milestone_due_date: so.Mapped[date] = so.mapped_column(index=True, default=date.today() + timedelta(days=3))
+    milestone_reward: so.Mapped[str] = so.mapped_column(sa.String(256))
+    milestone_status: so.Mapped[bool] = so.mapped_column(default=False)
+    goal_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(Goal.id, ondelete='CASCADE'), index=True)
+    milestone_goal: so.Mapped[Goal] = so.relationship(back_populates='milestones')
+
+    def __repr__(self):
+        return '<Milestone {}>'.format(self.milestone_title)

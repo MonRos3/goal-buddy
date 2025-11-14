@@ -161,3 +161,6 @@ cython_debug/
 
 # Dev Database
 *.db
+
+# Claude Code conventions file
+CLAUDE.md

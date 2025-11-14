@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1>Edit Milestone</h1>
+    <hr>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.milestone_title.label }} <br>
+            {{ form.milestone_title(size=64) }} <br>
+            <br>
+            {{ form.milestone_due_date.label }}
+            {{ form.milestone_due_date() }}
+            <br>
+            <br>
+            {{ form.milestone_reward.label }} <br>
+            {{ form.milestone_reward(size=64)}} <br>
+            <br>
+            {% for error in form.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

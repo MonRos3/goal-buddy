@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Hello {{ user.name }}, create a new goal:</h1>
+    <h1>Edit Goal</h1>
     <hr>
     <form action="" method="post">
         {{ form.hidden_tag() }}
@@ -15,7 +15,12 @@
             {{ form.goal_outcome(cols=128, rows=4)}} <br>
             <br>
             {{ form.goal_due_date.label }}
-            {{ form.goal_due_date() }}
+            {% if goal.is_date_locked %}
+                {{ form.goal_due_date(disabled=True) }}
+                <span style="color: rgb(234, 118, 118);"> (Date is locked)</span>
+            {% else %}
+                {{ form.goal_due_date() }}
+            {% endif %}
             <br>
             <br>
             {{ form.is_date_locked() }} {{ form.is_date_locked.label }}

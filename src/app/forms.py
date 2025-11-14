@@ -11,7 +11,7 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from wtforms_components import DateField, DateRange
 import sqlalchemy as sa
 from app import db
-from app.models import User, Goal
+from app.models import User, Goal, Milestone
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -45,4 +45,11 @@ class GoalForm(FlaskForm):
     goal_why = StringField('Why do you want to achieve this goal?', validators=[DataRequired()], render_kw={"placeholder": "The deck needs refinishing"})
     goal_outcome = StringField('What is your specific measurable outcome?', validators=[DataRequired()], render_kw={"placeholder": "Deck sealant has been applied"})
     goal_due_date = DateField('When do you want to achive this goal?', validators=[DataRequired()])
+    is_date_locked = BooleanField('Lock this date (helps with accountability)')
+    submit = SubmitField('Submit')
+
+class MilestoneForm(FlaskForm):
+    milestone_title = StringField('Milestone', validators=[DataRequired()], render_kw={"placeholder": "Sand the deck"})
+    milestone_due_date = DateField('Milestone due date', validators=[DataRequired()])
+    milestone_reward = StringField('Reward/Celebration', validators=[DataRequired()], render_kw={"placeholder": "Ice cream!"})
     submit = SubmitField('Submit')
